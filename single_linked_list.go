@@ -10,8 +10,8 @@ https://leetcode.com/problems/reverse-linked-list/
 Reverse a singly linked list.
 */
 func ReverseListIterative(head *ListNode) *ListNode {
-	var prev *ListNode = nil
 	curr := head
+	var prev *ListNode
 
 	for curr != nil {
 		next := curr.Next
@@ -45,19 +45,23 @@ func ReverseBetween(head *ListNode, m int, n int) *ListNode {
 		curr = curr.Next
 	}
 
-	prev.Next = reverseUntil(curr, n)
+	if prev != nil {
+		prev.Next = reverseUntil(curr, (n-m)+1)
+	} else {
+		head = reverseUntil(curr, n)
+	}
 
 	return head
 }
 
-func reverseUntil(head *ListNode, n int) *ListNode {
+func reverseUntil(head *ListNode, l int) *ListNode {
 	toBeTail := head
 
 	var prev *ListNode
 	curr := head
 	var next *ListNode
 
-	for i := 0; i < n-1; i++ {
+	for i := 0; i < l; i++ {
 		next = curr.Next
 		curr.Next = prev
 
@@ -65,6 +69,9 @@ func reverseUntil(head *ListNode, n int) *ListNode {
 		curr = next
 	}
 
-	toBeTail.Next = curr
+	if toBeTail != curr {
+		toBeTail.Next = curr
+	}
+
 	return prev
 }

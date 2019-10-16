@@ -23,9 +23,22 @@ func TestReverseBetween(t *testing.T) {
 	actual := ReverseBetween(list, 2, 4)
 	if !(ListsEqual(expected, actual)) {
 		t.Fatalf("ReverseBetween failed, %v != %v", PrintList(expected), PrintList(actual))
-	} else {
-		fmt.Println("TestReverseBetween pass")
 	}
+
+	expected2 := BuildList([]int{5})
+	list2 := BuildList([]int{5})
+	actual2 := ReverseBetween(list2, 1, 1)
+	if !(ListsEqual(expected2, actual2)) {
+		t.Fatalf("ReverseBetween failed, %v != %v", PrintList(expected2), PrintList(actual2))
+	}
+
+	expected3 := BuildList([]int{5, 3})
+	list3 := BuildList([]int{3, 5})
+	actual3 := ReverseBetween(list3, 1, 2)
+	if !(ListsEqual(expected3, actual3)) {
+		t.Fatalf("ReverseBetween failed. expected: %v, got: %v", PrintList(expected3), PrintList(actual3))
+	}
+	fmt.Println("TestReverseBetween pass")
 }
 
 func TestBuildList(t *testing.T) {
@@ -40,9 +53,9 @@ func TestBuildList(t *testing.T) {
 	}
 	actual := BuildList([]int{1, 2, 3})
 	if !(ListsEqual(expected, actual)) {
-		t.Fatalf("BuidList failed, %v != %v", PrintList(expected), PrintList(actual))
+		t.Fatalf("BuildList failed, %v != %v", PrintList(expected), PrintList(actual))
 	} else {
-		fmt.Println("TestBuidList pass")
+		fmt.Println("TestBuildList pass")
 	}
 }
 
