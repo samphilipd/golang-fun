@@ -17,6 +17,17 @@ func TestReverseListIterative(t *testing.T) {
 	}
 }
 
+func TestReverseBetween(t *testing.T) {
+	expected := BuildList([]int{1, 4, 3, 2, 5})
+	list := BuildList([]int{1, 2, 3, 4, 5})
+	actual := ReverseBetween(list, 2, 4)
+	if !(ListsEqual(expected, actual)) {
+		t.Fatalf("ReverseBetween failed, %v != %v", PrintList(expected), PrintList(actual))
+	} else {
+		fmt.Println("TestReverseBetween pass")
+	}
+}
+
 func TestBuildList(t *testing.T) {
 	expected := &ListNode{
 		Val: 1,
@@ -60,19 +71,16 @@ func BuildList(a []int) *ListNode {
 func PrintList(l *ListNode) string {
 	var b bytes.Buffer
 
-	b.WriteString("[")
 	curr := l
 
 	for curr != nil {
 		nodestr := fmt.Sprintf("%v", curr.Val)
 		b.WriteString(nodestr)
-		if curr.Next != nil {
-			b.WriteString("->")
-		}
+		b.WriteString("->")
 		curr = curr.Next
 	}
 
-	b.WriteString("]")
+	b.WriteString("NULL")
 
 	return b.String()
 }
