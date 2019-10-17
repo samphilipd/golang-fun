@@ -41,3 +41,39 @@ func MajorityElement(nums []int) int {
 	}
 	return -1
 }
+
+/*
+Given an integer array of size n, find all elements that appear more than ⌊ n/3 ⌋ times.
+
+Note: The algorithm should run in linear time and in O(1) space.
+
+Example 1:
+
+Input: [3,2,3]
+Output: [3]
+
+Example 2:
+
+Input: [1,1,1,3,3,2,2,2]
+Output: [1,2]
+*/
+func MajorityElements(nums []int) []int {
+	sort.Ints(nums)
+
+	count := 0
+	var k int
+	els := []int{}
+
+	for i := 0; i < len(nums); i++ {
+		if nums[i] != k {
+			count = 0
+			k = nums[i]
+		} else {
+			count++
+		}
+		if count >= len(nums)/3 {
+			els = append(els, nums[i])
+		}
+	}
+	return els
+}
