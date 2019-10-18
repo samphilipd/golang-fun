@@ -42,6 +42,26 @@ func MajorityElement(nums []int) int {
 	return -1
 }
 
+func MajorityElementMoores(nums []int) int {
+	// Use Boyer-Moore majority vote algorithm
+	// There can only be one.
+	var m int
+	i := 0
+
+	for _, x := range nums {
+		if i == 0 {
+			m = x
+			i++
+		} else if m == x {
+			i++
+		} else {
+			i--
+		}
+	}
+
+	return m
+}
+
 /*
 Given an integer array of size n, find all elements that appear more than ⌊ n/3 ⌋ times.
 
@@ -58,22 +78,49 @@ Input: [1,1,1,3,3,2,2,2]
 Output: [1,2]
 */
 func MajorityElements(nums []int) []int {
-	sort.Ints(nums)
+	// Use Boyer-Moore majority vote algorithm
+	// There can only be one.
+	var m1 int
+	var m2 int
+	i1 := 0
+	i2 := 0
 
-	count := 0
-	var k int
-	els := []int{}
-
-	for i := 0; i < len(nums); i++ {
-		if nums[i] != k {
-			count = 0
-			k = nums[i]
+	for _, x := range nums {
+		if m1 == x {
+			i1++
+		} else if m2 == x {
+			i2++
+		} else if i1 == 0 {
+			m1 = x
+			i1++
+		} else if i2 == 0 {
+			m2 = x
+			i2++
 		} else {
-			count++
-		}
-		if count >= len(nums)/3 {
-			els = append(els, nums[i])
+			i1--
+			i2--
 		}
 	}
-	return els
+
+	// got two most common elements
+	// now need to verify > 1/3
+	cnt1 := 0
+	cnt2 := 0
+	for _, x := range nums {
+		if x == m1 {
+			cnt1++
+		} else if x == m2 {
+			cnt2++
+		}
+	}
+	result := []int{}
+
+	if cnt1 > len(nums)/3 {
+		result = append(result, m1)
+	}
+	if cnt2 > len(nums)/3 {
+		result = append(result, m2)
+	}
+
+	return result
 }
