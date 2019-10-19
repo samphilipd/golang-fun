@@ -32,3 +32,40 @@ func MergeTrees(t1 *TreeNode, t2 *TreeNode) *TreeNode {
 		return nil
 	}
 }
+
+/*
+226. Invert Binary Tree
+Easy
+
+Invert a binary tree.
+
+Example:
+
+Input:
+
+     4
+   /   \
+  2     7
+ / \   / \
+1   3 6   9
+
+Output:
+
+     4
+   /   \
+  7     2
+ / \   / \
+9   6 3   1
+*/
+func InvertTree(root *TreeNode) *TreeNode {
+	// swap the two
+	// go down and swap each one
+	if root == nil {
+		return nil
+	}
+	right := InvertTree(root.Left)
+	left := InvertTree(root.Right)
+	root.Right = right
+	root.Left = left
+	return root
+}

@@ -39,6 +39,16 @@ func TestBuildTree(t *testing.T) {
 	}
 }
 
+func TestInvertTree(t *testing.T) {
+	input := BuildTree([]int{4, 2, 7, 1, 3, 6, 9})
+	expected := BuildTree([]int{4, 7, 2, 9, 6, 3, 1})
+	actual := InvertTree(input)
+	if !(TreesEqual(expected, actual)) {
+		t.Fatalf("InvertTree failed. trees are not the same")
+	}
+
+}
+
 func TreesEqual(t1 *TreeNode, t2 *TreeNode) bool {
 	if t1 != nil && t2 != nil {
 		return t1.Val == t2.Val && TreesEqual(t1.Left, t2.Left) && TreesEqual(t1.Right, t2.Right)
