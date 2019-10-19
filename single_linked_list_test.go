@@ -117,6 +117,15 @@ func TestAddTwoNumbers3(t *testing.T) {
 	}
 }
 
+func TestHasCycle(t *testing.T) {
+	input := BuildListWithCycle([]int{3, 2, 0, -4}, 1)
+	result := HasCycle(input)
+
+	if !result {
+		t.Fatalf("HasCycle expected true but returned false")
+	}
+}
+
 func BuildList(a []int) *ListNode {
 	if len(a) == 0 {
 		return nil
@@ -164,4 +173,35 @@ func ListsEqual(l1 *ListNode, l2 *ListNode) bool {
 	} else {
 		return false
 	}
+}
+
+func BuildListWithCycle(a []int, pos int) *ListNode {
+	if len(a) == 0 {
+		return nil
+	}
+
+	head := &ListNode{
+		Val: a[0],
+	}
+	prev := head
+	var curr *ListNode
+	var cyclePointsTo *ListNode
+	if pos == 0 {
+		cyclePointsTo = head
+	}
+
+	for i := 1; i < len(a); i++ {
+		curr = &ListNode{
+			Val: a[i],
+		}
+		if i == pos {
+			cyclePointsTo = curr
+		}
+		prev.Next = curr
+		prev = curr
+	}
+	curr.Next = cyclePointsTo
+
+	return head
+
 }

@@ -173,3 +173,17 @@ func length(l *ListNode) int {
 	}
 	return i
 }
+
+func HasCycle(head *ListNode) bool {
+	// Floyd's cycle detection algorithm
+	curr1 := head
+	curr2 := head
+	for curr2 != nil && curr2.Next != nil {
+		curr1 = curr1.Next
+		curr2 = curr2.Next.Next
+		if curr1 == curr2 {
+			return true
+		}
+	}
+	return false
+}
