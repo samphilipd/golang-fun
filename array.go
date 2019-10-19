@@ -143,6 +143,7 @@ Output: 28
 Explanation: The maximum result is 5 ^ 25 = 28.
 */
 func findMaximumXORNaive(nums []int) int {
+	// Complexity: O(N^2)
 	var max int
 
 	for i, a := range nums {
@@ -156,3 +157,8 @@ func findMaximumXORNaive(nums []int) int {
 
 	return max
 }
+
+// func findMaximumXORTrie(nums []int) int {
+// 	// Complexity: O(N)
+// 	// Create Trie using bytes as nodes
+// }
