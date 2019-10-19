@@ -75,3 +75,52 @@ func reverseUntil(head *ListNode, l int) *ListNode {
 
 	return prev
 }
+
+/*
+You are given two non-empty linked lists representing two non-negative
+integers. The most significant digit comes first and each of their nodes
+contain a single digit. Add the two numbers and return it as a linked
+list.
+
+You may assume the two numbers do not contain any leading zero, except
+the number 0 itself.
+
+Follow up: What if you cannot modify the input lists? In other words,
+reversing the lists is not allowed.
+
+Example:
+
+Input: (7 -> 2 -> 4 -> 3) + (5 -> 6 -> 4) Output: 7 -> 8 -> 0 -> 7
+*/
+
+// func AddTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
+// 	// reverse first
+// }
+
+func makeReversedCopy(l *ListNode) *ListNode {
+	// A1 -> B1 -> C1
+	// A2 <- B2
+	// Build new list backwards
+
+	var prev *ListNode
+	curr := &ListNode{Val: l.Val}
+
+	for l != nil {
+		next := prev
+		curr = &ListNode{Val: l.Val, Next: next}
+		prev = curr
+		l = l.Next
+	}
+
+	return curr
+}
+
+func length(l *ListNode) int {
+	i := 0
+	curr := l
+	for curr != nil {
+		curr = curr.Next
+		i++
+	}
+	return i
+}

@@ -59,6 +59,31 @@ func TestBuildList(t *testing.T) {
 	}
 }
 
+func TestMakeReversedCopy(t *testing.T) {
+	expected := BuildList([]int{1, 2, 3, 4})
+	list := BuildList([]int{4, 3, 2, 1})
+	actual := makeReversedCopy(list)
+
+	if actual == expected {
+		t.Fatalf("makeReversedCopy failed, actual is not a copy of expected")
+	}
+	if !(ListsEqual(expected, actual)) {
+		t.Fatalf("makeReversedCopy failed. Expected: %v, got: %v", PrintList(expected), PrintList(actual))
+	}
+}
+func TestMakeReversedCopy2(t *testing.T) {
+	expected := BuildList([]int{1})
+	list := BuildList([]int{1})
+	actual := makeReversedCopy(list)
+
+	if actual == expected {
+		t.Fatalf("makeReversedCopy failed, actual is not a copy of expected")
+	}
+	if !(ListsEqual(expected, actual)) {
+		t.Fatalf("makeReversedCopy failed. Expected: %v, got: %v", PrintList(expected), PrintList(actual))
+	}
+}
+
 func BuildList(a []int) *ListNode {
 	if len(a) == 0 {
 		return nil
