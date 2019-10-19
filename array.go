@@ -124,3 +124,35 @@ func MajorityElements(nums []int) []int {
 
 	return result
 }
+
+/*
+421. Maximum XOR of Two Numbers in an Array Medium
+
+Given a non-empty array of numbers, a0, a1, a2, … , an-1, where 0 ≤ ai < 231.
+
+Find the maximum result of ai XOR aj, where 0 ≤ i, j < n.
+
+Could you do this in O(n) runtime?
+
+Example:
+
+Input: [3, 10, 5, 25, 2, 8]
+
+Output: 28
+
+Explanation: The maximum result is 5 ^ 25 = 28.
+*/
+func findMaximumXORNaive(nums []int) int {
+	var max int
+
+	for i, a := range nums {
+		for j := i + 1; j < len(nums); j++ {
+			xor := a ^ nums[j]
+			if xor > max {
+				max = xor
+			}
+		}
+	}
+
+	return max
+}

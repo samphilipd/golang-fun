@@ -71,6 +71,16 @@ func TestMajorityElements(t *testing.T) {
 	}
 }
 
+func TestFindMaximumXORNaive(t *testing.T) {
+	input := []int{3, 10, 5, 25, 2, 8}
+	expected := 28
+	actual := findMaximumXORNaive(input)
+
+	if actual != expected {
+		t.Fatalf("TestFindMaximumXORNaive failed. Expected: %v, got: %v", expected, actual)
+	}
+}
+
 // Equal tells whether a and b contain the same elements.
 // A nil argument is equivalent to an empty slice.
 func ArraysEqual(a, b []int) bool {
