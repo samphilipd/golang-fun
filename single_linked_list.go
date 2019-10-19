@@ -93,9 +93,58 @@ Example:
 Input: (7 -> 2 -> 4 -> 3) + (5 -> 6 -> 4) Output: 7 -> 8 -> 0 -> 7
 */
 
-// func AddTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
-// 	// reverse first
-// }
+func AddTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
+	// First reverse the lists
+	l1 = makeReversedCopy(l1)
+	l2 = makeReversedCopy(l2)
+	var res *ListNode
+	var prev *ListNode
+
+	// Now we have 7243 + 564 as (3 -> 4 -> 2 -> 7) + (4 -> 6 -> 5)
+	carry := 0
+
+	for l1 != nil && l2 != nil {
+		sum := l1.Val + l2.Val + carry
+		if sum > 9 {
+			carry = 1
+			sum -= 10
+		} else {
+			carry = 0
+		}
+		// Build the list backwards
+		res = &ListNode{Val: sum, Next: prev}
+		prev = res
+		l1 = l1.Next
+		l2 = l2.Next
+	}
+
+	var longer *ListNode
+	if l1 != nil {
+		longer = l1
+	} else {
+		longer = l2
+	}
+
+	for longer != nil {
+		sum := longer.Val + carry
+		if sum > 9 {
+			carry = 1
+			sum -= 10
+		} else {
+			carry = 0
+		}
+		// Build the list backwards
+		res = &ListNode{Val: sum, Next: prev}
+		prev = res
+		longer = longer.Next
+	}
+	if carry > 0 {
+		res = &ListNode{Val: carry, Next: res}
+	}
+
+	return res
+
+}
 
 func makeReversedCopy(l *ListNode) *ListNode {
 	// A1 -> B1 -> C1

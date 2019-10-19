@@ -64,8 +64,8 @@ func TestMakeReversedCopy(t *testing.T) {
 	list := BuildList([]int{4, 3, 2, 1})
 	actual := makeReversedCopy(list)
 
-	if actual == expected {
-		t.Fatalf("makeReversedCopy failed, actual is not a copy of expected")
+	if actual == list {
+		t.Fatalf("makeReversedCopy failed, actual is not a copy of input")
 	}
 	if !(ListsEqual(expected, actual)) {
 		t.Fatalf("makeReversedCopy failed. Expected: %v, got: %v", PrintList(expected), PrintList(actual))
@@ -76,11 +76,44 @@ func TestMakeReversedCopy2(t *testing.T) {
 	list := BuildList([]int{1})
 	actual := makeReversedCopy(list)
 
-	if actual == expected {
-		t.Fatalf("makeReversedCopy failed, actual is not a copy of expected")
+	if actual == list {
+		t.Fatalf("makeReversedCopy failed, actual is not a copy of input")
 	}
 	if !(ListsEqual(expected, actual)) {
 		t.Fatalf("makeReversedCopy failed. Expected: %v, got: %v", PrintList(expected), PrintList(actual))
+	}
+}
+
+func TestAddTwoNumbers(t *testing.T) {
+	list1 := BuildList([]int{7, 2, 4, 3})
+	list2 := BuildList([]int{5, 6, 4})
+	expected := BuildList([]int{7, 8, 0, 7})
+	actual := AddTwoNumbers(list1, list2)
+
+	if !(ListsEqual(expected, actual)) {
+		t.Fatalf("AddTwoNumbers failed. Expected: %v, got: %v", PrintList(expected), PrintList(actual))
+	}
+}
+
+func TestAddTwoNumbers2(t *testing.T) {
+	list1 := BuildList([]int{5})
+	list2 := BuildList([]int{5})
+	expected := BuildList([]int{1, 0})
+	actual := AddTwoNumbers(list1, list2)
+
+	if !(ListsEqual(expected, actual)) {
+		t.Fatalf("AddTwoNumbers failed. Expected: %v, got: %v", PrintList(expected), PrintList(actual))
+	}
+}
+
+func TestAddTwoNumbers3(t *testing.T) {
+	list1 := BuildList([]int{1})
+	list2 := BuildList([]int{9, 9})
+	expected := BuildList([]int{1, 0, 0})
+	actual := AddTwoNumbers(list1, list2)
+
+	if !(ListsEqual(expected, actual)) {
+		t.Fatalf("AddTwoNumbers failed. Expected: %v, got: %v", PrintList(expected), PrintList(actual))
 	}
 }
 
