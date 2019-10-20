@@ -121,8 +121,13 @@ func (root *LetterTrieNode) Search(word string) bool {
 	for i, c := range word {
 		fmt.Println(c)
 		if c == '.' {
+			fmt.Println("wildcard baby")
+			fmt.Println(root.Children)
+			if len(root.Children) == 0 {
+				return false
+			}
 			for _, node := range root.Children {
-				if node.Search(word[i:]) {
+				if node.Search(word[i+1:]) {
 					return true
 				}
 				return false
