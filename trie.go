@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"unicode/utf8"
 )
 
@@ -91,7 +90,6 @@ func (dict *WordDictionary) Search(word string) bool {
 		return false
 	}
 	c, _ := utf8.DecodeRuneInString(word)
-	fmt.Printf("%c\n", c)
 	if c == '.' {
 		for _, node := range dict.Children {
 			if node.Search(word[1:]) {
@@ -101,7 +99,6 @@ func (dict *WordDictionary) Search(word string) bool {
 		}
 	} else {
 		root := findNode(dict.Children, c)
-		fmt.Printf("root: %#v\n", root)
 		return root.Search(word[1:])
 	}
 	return false
@@ -112,17 +109,11 @@ func (dict *WordDictionary) Search(word string) bool {
 //
 // Depth-first search implementation for simplicity
 func (root *LetterTrieNode) Search(word string) bool {
-	fmt.Printf("word2: %v\n", word)
-	fmt.Printf("root2: %v\n", root)
 	if root == nil {
 		return false
 	}
-	fmt.Println("--START LOOP--")
 	for i, c := range word {
-		fmt.Println(c)
 		if c == '.' {
-			fmt.Println("wildcard baby")
-			fmt.Println(root.Children)
 			if len(root.Children) == 0 {
 				return false
 			}
@@ -134,8 +125,6 @@ func (root *LetterTrieNode) Search(word string) bool {
 			}
 		} else {
 			node := root.findNode(c)
-			fmt.Printf("node.Letter: %#v\n", node.Letter)
-			fmt.Printf("c: %#v\n", c)
 			if node == nil {
 				return false
 			} else if node.Letter == c {
