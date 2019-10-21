@@ -1,9 +1,5 @@
 package main
 
-import (
-	"unicode/utf8"
-)
-
 /*
 211. Add and Search Word - Data structure design
      Medium
@@ -37,121 +33,81 @@ You may assume that all words are consist of lowercase letters a-z.
  */
 
 type WordDictionary struct {
-	Children []*LetterTrieNode
+	Root *TrieNode
 }
-type LetterTrieNode struct {
-	Letter   rune
-	Children []*LetterTrieNode
+type TrieNode struct {
+	IsWord   bool
+	Children [26]*TrieNode
 }
 
 // Constructor initialize your data structure here.
 func Constructor() WordDictionary {
-	return WordDictionary{Children: make([]*LetterTrieNode, 0)}
+	root := makeNode()
+	root.IsWord = false
+	return WordDictionary{Root: root}
+}
+
+func makeNode() *TrieNode {
+	return &TrieNode{}
 }
 
 func (dict *WordDictionary) AddWord(word string) {
-	if len(word) == 0 {
-		return
-	}
-	c, _ := utf8.DecodeRuneInString(word)
-	node := findNode(dict.Children, c)
-	if node == nil {
-		node = makeNode(c)
-		dict.Children = append(dict.Children, node)
-	}
-	node.AddWord(word[1:])
+	addWord(dict.Root, word)
 }
 
-// AddWord adds a word into the data structure
-// (root A) -> [(root B) -> []]
-func (root *LetterTrieNode) AddWord(word string) {
-	if len(word) == 0 {
-		return
-	}
-	for _, c := range word {
-		node := root.findNode(c)
-		if node == nil {
-			node = makeNode(c)
-			root.Children = append(root.Children, node)
+func addWord(root *TrieNode, word string) {
+	prev := root
+
+	for i := 0; i < len(word); i++ {
+		childIdx := letterToIndex(word[i])
+		curr := prev.Children[childIdx]
+		if curr == nil {
+			curr = makeNode()
+			prev.Children[childIdx] = curr
 		}
-		root = node
 
+		isWord := false
+		if i == len(word)-1 {
+			isWord = true
+		}
+		curr.IsWord = isWord
+		prev = curr
 	}
 }
 
-func makeNode(c rune) *LetterTrieNode {
-	node := &LetterTrieNode{Children: make([]*LetterTrieNode, 0)}
-	node.Letter = c
-	return node
+// You may assume that all words are consist of lowercase letters a-z
+func letterToIndex(c byte) int {
+	return int(c) - 'a'
 }
 
 func (dict *WordDictionary) Search(word string) bool {
-	if word == "" {
-		return false
-	}
-	c, _ := utf8.DecodeRuneInString(word)
-	if c == '.' {
-		for _, node := range dict.Children {
-			if node.Search(word[1:]) {
-				return true
-			}
-			return false
-		}
-	} else {
-		root := findNode(dict.Children, c)
-		return root.Search(word[1:])
-	}
-	return false
+	return search(dict.Root, word)
 }
 
-// Search returns if the word is in the data structure. A word could
-// contain the dot character '.' to represent any one letter.
-//
-// Depth-first search implementation for simplicity
-func (root *LetterTrieNode) Search(word string) bool {
+func search(root *TrieNode, word string) bool {
 	if root == nil {
 		return false
 	}
-	for i, c := range word {
-		if c == '.' {
-			if len(root.Children) == 0 {
-				return false
-			}
-			for _, node := range root.Children {
-				if node.Search(word[i+1:]) {
+	curr := root
+
+	for i := 0; i < len(word); i++ {
+		ch := word[i]
+		if ch == '.' {
+			// DFS
+			for l := 0; l < 26; l++ {
+				if search(curr.Children[l], word[i+1:]) {
 					return true
 				}
-				return false
 			}
+			return false
 		} else {
-			node := root.findNode(c)
-			if node == nil {
-				return false
-			} else if node.Letter == c {
-				root = node
+			next := curr.Children[letterToIndex(ch)]
+			if next != nil {
+				curr = next
 			} else {
 				return false
 			}
 		}
 	}
-	return true
-}
-
-func (root *LetterTrieNode) findNode(c rune) *LetterTrieNode {
-	if root != nil {
-		node := findNode(root.Children, c)
-		if node != nil {
-			return node
-		}
-	}
-	return nil
-}
-
-func findNode(a []*LetterTrieNode, c rune) *LetterTrieNode {
-	for _, node := range a {
-		if node.Letter == c {
-			return node
-		}
-	}
-	return nil
+	return curr.IsWord
 }
