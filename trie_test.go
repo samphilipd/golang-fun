@@ -39,3 +39,14 @@ func TestLetterTrieNode2(t *testing.T) {
 		t.Fatal("WordDictionary failed. Expected Search(\"a.\") to be false")
 	}
 }
+
+func TestLetterTrieNode3(t *testing.T) {
+	root := Constructor()
+
+	root.AddWord("a")
+	root.AddWord("ab")
+
+	if root.Search("a") != true {
+		t.Fatal("WordDictionary failed. Expected Search(\"a\") to be true")
+	}
+}

@@ -66,11 +66,9 @@ func addWord(root *TrieNode, word string) {
 			prev.Children[childIdx] = curr
 		}
 
-		isWord := false
 		if i == len(word)-1 {
-			isWord = true
+			curr.IsWord = true
 		}
-		curr.IsWord = isWord
 		prev = curr
 	}
 }
