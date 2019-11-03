@@ -165,3 +165,78 @@ func dequeue(l *list.List) *TreeNode {
 	l.Remove(el)
 	return el.Value.(*TreeNode)
 }
+
+/*
+ Given a binary tree, you need to compute the length of the diameter of
+ the tree. The diameter of a binary tree is the length of the longest
+ path between any two nodes in a tree. This path may or may not pass
+ through the root.
+
+ Example: Given a binary tree
+
+          1
+         / \
+        2   3
+       / \
+      4   5
+
+ Return 3, which is the length of the path [4,2,1,3] or [5,2,1,3].
+
+ Note: The length of path between two nodes is represented by the number
+ of edges between them.
+*/
+
+// This solution has time complexity of O(n^2) because it must call height
+// for every node
+func diameterOfBinaryTree(root *TreeNode) int {
+	// Use DFS
+	if root == nil {
+		return 0
+	}
+
+	// Passing through root
+	thisDiameter := height(root.Left) + height(root.Right)
+
+	// Not passing through root
+	lDiameter := diameterOfBinaryTree(root.Left)
+	rDiameter := diameterOfBinaryTree(root.Right)
+
+	return max(thisDiameter, max(lDiameter, rDiameter))
+}
+
+func height(root *TreeNode) int {
+	if root == nil {
+		return 0
+	}
+	return 1 + max(height(root.Left), height(root.Right))
+}
+
+func max(a, b int) int {
+	if a > b {
+		return a
+	}
+	return b
+}
+
+// This implementation has time complexity of O(n) because it calculates
+// height and diameter on the same pass
+func diameterOfBinaryTreeOptimised(root *TreeNode) int {
+	diameter, _ := diameterOfBinaryTreeOptimisedHelper(root, 0)
+	return diameter
+}
+
+func diameterOfBinaryTreeOptimisedHelper(root *TreeNode, height int) (int, int) {
+	// Use DFS
+	if root == nil {
+		return 0, 0
+	}
+	// Not passing through root
+	lDiameter, lHeight := diameterOfBinaryTreeOptimisedHelper(root.Left, 0)
+	rDiameter, rHeight := diameterOfBinaryTreeOptimisedHelper(root.Right, 0)
+
+	// Passing through root
+	thisDiameter := lHeight + rHeight
+	thisHeight := max(lHeight, rHeight) + 1
+
+	return max(thisDiameter, max(lDiameter, rDiameter)), thisHeight
+}

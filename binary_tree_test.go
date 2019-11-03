@@ -81,3 +81,58 @@ func BuildTreeNode(vals []int, i int) *TreeNode {
 	}
 	return nil
 }
+
+func TestDiameterOfBinaryTree(t *testing.T) {
+	input := BuildTree([]int{1, 2, 3, 4, 5})
+	expected := 3
+	actual := diameterOfBinaryTree(input)
+	if expected != actual {
+		t.Fatalf("diameterOfBinaryTree failed: expected %v, got %v", expected, actual)
+	}
+
+	input2 := BuildTree([]int{1})
+	expected2 := 0
+	actual2 := diameterOfBinaryTree(input2)
+	if expected2 != actual2 {
+		t.Fatalf("diameterOfBinaryTree failed: expected %v, got %v", expected2, actual2)
+	}
+}
+
+func TestDiameterOfBinaryTreeOptimised(t *testing.T) {
+	input := BuildTree([]int{1, 2, 3, 4, 5})
+	expected := 3
+	actual := diameterOfBinaryTreeOptimised(input)
+	if expected != actual {
+		t.Fatalf("diameterOfBinaryTreeOptimised failed: expected %v, got %v", expected, actual)
+	}
+
+	input2 := BuildTree([]int{1})
+	expected2 := 0
+	actual2 := diameterOfBinaryTreeOptimised(input2)
+	if expected2 != actual2 {
+		t.Fatalf("diameterOfBinaryTreeOptimised failed: expected %v, got %v", expected2, actual2)
+	}
+}
+
+func TestHeight(t *testing.T) {
+	var input *TreeNode = nil
+	expected := 0
+	actual := height(input)
+	if expected != actual {
+		t.Fatalf("height failed: expected %v, got %v", expected, actual)
+	}
+
+	input2 := BuildTree([]int{1})
+	expected2 := 1
+	actual2 := height(input2)
+	if expected2 != actual2 {
+		t.Fatalf("height failed: expected %v, got %v", expected2, actual2)
+	}
+
+	input3 := BuildTree([]int{1, 2, 3, 4, 5})
+	expected3 := 3
+	actual3 := height(input3)
+	if expected3 != actual3 {
+		t.Fatalf("height failed: expected %v, got %v", expected3, actual3)
+	}
+}
