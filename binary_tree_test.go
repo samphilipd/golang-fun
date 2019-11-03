@@ -136,3 +136,26 @@ func TestHeight(t *testing.T) {
 		t.Fatalf("height failed: expected %v, got %v", expected3, actual3)
 	}
 }
+
+func TestIsBalanced(t *testing.T) {
+	var input *TreeNode = nil
+	expected := true
+	actual := isBalanced(input)
+	if expected != actual {
+		t.Fatalf("isBalanced failed: expected %v, got %v", expected, actual)
+	}
+
+	input2 := BuildTree([]int{3, 9, 20, -1, -1, 15, 7})
+	expected2 := true
+	actual2 := isBalanced(input2)
+	if expected2 != actual2 {
+		t.Fatalf("height failed: expected %v, got %v", expected2, actual2)
+	}
+
+	input3 := BuildTree([]int{1, 2, 2, 3, 3, -1, -1, 4, 4})
+	expected3 := false
+	actual3 := isBalanced(input3)
+	if expected3 != actual3 {
+		t.Fatalf("height failed: expected %v, got %v", expected3, actual3)
+	}
+}

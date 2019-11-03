@@ -240,3 +240,31 @@ func diameterOfBinaryTreeOptimisedHelper(root *TreeNode, height int) (int, int) 
 
 	return max(thisDiameter, max(lDiameter, rDiameter)), thisHeight
 }
+
+func isBalanced(root *TreeNode) bool {
+	if heightBalanced(root) == -1 {
+		return false
+	}
+	return true
+}
+
+func heightBalanced(root *TreeNode) int {
+	if root == nil {
+		return 0
+	}
+	lHeight := heightBalanced(root.Left)
+	rHeight := heightBalanced(root.Right)
+
+	if diff(lHeight, rHeight) <= 1 && lHeight != -1 && rHeight != -1 {
+		return 1 + max(lHeight, rHeight)
+	}
+	return -1
+}
+
+func diff(a, b int) int {
+	d := a - b
+	if d < 0 {
+		return -d
+	}
+	return d
+}
